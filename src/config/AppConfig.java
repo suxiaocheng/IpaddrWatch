@@ -8,4 +8,5 @@ public class AppConfig {
 	public static final boolean DEBUG = false;
 	public static final String WORKING_DIR = File.separator + "home" + File.separator + System.getProperty("user.name") +  File.separator
 			+ "IpAddr" + File.separator;
+	public static final String PROGRAM_NAME = System.getProperty("sun.java.command");
 }

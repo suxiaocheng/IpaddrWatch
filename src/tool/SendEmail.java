@@ -33,20 +33,20 @@ public class SendEmail implements Runnable {
 	public void run() {
 		File attactment = null;
 		Properties props = new Properties();
-		// ¿ªÆôdebugµ÷ÊÔ
+		// ï¿½ï¿½ï¿½ï¿½debugï¿½ï¿½ï¿½ï¿½
 		props.setProperty("mail.debug", "false");
-		// ·¢ËÍ·şÎñÆ÷ĞèÒªÉí·İÑéÖ¤
+		// ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ö¤
 		props.setProperty("mail.smtp.auth", "true");
-		// ÉèÖÃÓÊ¼ş·şÎñÆ÷Ö÷»úÃû
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		props.setProperty("mail.host", "smtp.163.com");
-		// ·¢ËÍÓÊ¼şĞ­ÒéÃû³Æ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½Ğ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		props.setProperty("mail.transport.protocol", "smtp");
 
-		// ÉèÖÃ»·¾³ĞÅÏ¢
+		// ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 		Session session = Session.getInstance(props);
 		session.setDebug(false);
 
-		// ´´½¨ÓÊ¼ş¶ÔÏó
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
 		Message msg = new MimeMessage(session);
 		try {
 			msg.setFrom(new InternetAddress("simulator_test@163.com"));
@@ -90,13 +90,13 @@ public class SendEmail implements Runnable {
 			msg.setSentDate(new Date());
 
 			Transport transport = session.getTransport();
-			// Á¬½ÓÓÊ¼ş·şÎñÆ÷
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			transport.connect("simulator_test", "simulator123");
-			// ·¢ËÍÓÊ¼ş
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½
 			transport.sendMessage(msg, new Address[] {
 					new InternetAddress("suxiaocheng2010@hotmail.com"),
 					new InternetAddress("simulator_test@163.com") });
-			// ¹Ø±ÕÁ¬½Ó
+			// ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½
 			transport.close();
 
 			Log.d("SendMail " + text + " successfully");

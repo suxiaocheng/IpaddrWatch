@@ -19,10 +19,10 @@ import config.AppConfig;
 import debug.Log;
 
 public class Database {
-	private static String databaseName = "hz_house";
+	private static String databaseName = AppConfig.PROGRAM_NAME;
 	protected static Connection conn = null;
 
-	private static final String strDBName = "hz_house.db";
+	private static final String strDBName = AppConfig.PROGRAM_NAME + ".db";
 	private static final String strDBXZName = strDBName + ".xz";
 
 	static {
