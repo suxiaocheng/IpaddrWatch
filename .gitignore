@@ -1,0 +1,24 @@
+bin/
+
+#ignore log file
+*.log
+*.1
+*.lck
+
+#ignore backup file
+*~
+*.bak
+
+#ignore test file
+*.csv
+
+#ignore html file
+*.html
+
+#ignore output dir
+output/
+
+#ignore the database
+*.db
+*.db-journal
+*.db.xz
