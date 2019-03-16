@@ -15,7 +15,6 @@ import java.sql.Statement;
 import org.tukaani.xz.LZMA2Options;
 import org.tukaani.xz.XZOutputStream;
 
-import app.GetHouseBuildingDetail;
 import config.AppConfig;
 import debug.Log;
 
