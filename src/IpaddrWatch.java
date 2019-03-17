@@ -1,3 +1,8 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -12,6 +17,7 @@ import tool.SendEmail;
 
 public class IpaddrWatch {
 	private static String Ipaddr = new String();
+	private static final String AddrStorageFile = AppConfig.WORKING_DIR + "ipaddr";
 
 	public static void main(String[] args) {
 		String CurrentIpaddr;
@@ -24,18 +30,19 @@ public class IpaddrWatch {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		Ipaddr = readToString(AddrStorageFile);
 		// TODO Auto-generated method stub
-		while (true) {		
+		while (true) {
 			CurrentIpaddr = getCurrentUsedAddr();
-			if(CurrentIpaddr.compareTo(Ipaddr) != 0) {				
-				Log.d("System ipaddr change from " + Ipaddr +  " to " + CurrentIpaddr);
+			if (CurrentIpaddr.compareTo(Ipaddr) != 0) {
+				Log.d("System ipaddr change from " + Ipaddr + " to " + CurrentIpaddr);
 				Ipaddr = CurrentIpaddr;
+				writeStringToFile(AddrStorageFile, Ipaddr);
 				calendar = Calendar.getInstance();
-				timestamp = "" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "  " +
-						calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":"  + 
-						calendar.get(Calendar.SECOND) + "  ";
-				SendEmail mail = new SendEmail(AppConfig.PROGRAM_NAME + "(" + hostname + ")", 
-						timestamp + Ipaddr, null);
+				timestamp = "" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "  "
+						+ calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":"
+						+ calendar.get(Calendar.SECOND) + "  ";
+				SendEmail mail = new SendEmail(AppConfig.PROGRAM_NAME + "(" + hostname + ")", timestamp + Ipaddr, null);
 				Thread t2 = new Thread(mail);
 				t2.start();
 			}
@@ -63,7 +70,7 @@ public class IpaddrWatch {
 		}
 		return ip;
 	}
-	
+
 	private static String getAllUsedAddr() {
 		String ip = new String();
 		Enumeration<NetworkInterface> enum_network;
@@ -82,6 +89,49 @@ public class IpaddrWatch {
 			e1.printStackTrace();
 		}
 		return ip;
+	}
+
+	public static String readToString(String fileName) {
+		File file = new File(fileName);
+		Long filelength = file.length();
+		byte[] filecontent = new byte[filelength.intValue()];
+		try {
+			FileInputStream in = new FileInputStream(file);
+			in.read(filecontent);
+			in.close();
+		} catch (FileNotFoundException e) {
+			Log.i(fileName + " is not exist");
+			return new String();
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.i(fileName + " read error");
+			return new String();
+		}
+		return new String(filecontent);
+	}
+
+	public static boolean writeStringToFile(String fileName, String content) {
+		File file = new File(fileName);
+		if (file.exists()) {
+			try {
+				file.delete();
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+		}
+		try {
+			FileOutputStream out = new FileOutputStream(file);
+			out.write(content.getBytes());
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			Log.i(fileName + " write error");
+			return false;
+		}
+		return true;
 	}
 
 }
