@@ -19,9 +19,9 @@ import javax.mail.internet.MimeMultipart;
 import debug.Log;
 
 public class SendEmail implements Runnable {
-	String text;
-	String filename;
-	String title;
+	private String text;
+	private String filename;
+	private String title;
 
 	public SendEmail(String _title, String _text, String _filename) {
 		super();
