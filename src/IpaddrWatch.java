@@ -34,7 +34,7 @@ public class IpaddrWatch {
 		// TODO Auto-generated method stub
 		while (true) {
 			CurrentIpaddr = getCurrentUsedAddr();
-			if (CurrentIpaddr.compareTo(Ipaddr) != 0) {
+			if ((CurrentIpaddr != null) && (CurrentIpaddr.compareTo(Ipaddr) != 0)) {
 				Log.d("System ipaddr change from " + Ipaddr + " to " + CurrentIpaddr);
 				Ipaddr = CurrentIpaddr;
 				writeStringToFile(AddrStorageFile, Ipaddr);
