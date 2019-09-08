@@ -33,20 +33,14 @@ public class SendEmail implements Runnable {
 	public void run() {
 		File attactment = null;
 		Properties props = new Properties();
-		// ����debug����
 		props.setProperty("mail.debug", "false");
-		// ���ͷ�������Ҫ�����֤
 		props.setProperty("mail.smtp.auth", "true");
-		// �����ʼ�������������
 		props.setProperty("mail.host", "smtp.163.com");
-		// �����ʼ�Э������
 		props.setProperty("mail.transport.protocol", "smtp");
 
-		// ���û�����Ϣ
 		Session session = Session.getInstance(props);
 		session.setDebug(false);
 
-		// �����ʼ�����
 		Message msg = new MimeMessage(session);
 		try {
 			msg.setFrom(new InternetAddress("simulator_test@163.com"));
@@ -90,13 +84,10 @@ public class SendEmail implements Runnable {
 			msg.setSentDate(new Date());
 
 			Transport transport = session.getTransport();
-			// �����ʼ�������
 			transport.connect("simulator_test", "simulator123");
-			// �����ʼ�
 			transport.sendMessage(msg, new Address[] {
 					new InternetAddress("suxiaocheng2010@hotmail.com"),
 					new InternetAddress("simulator_test@163.com") });
-			// �ر�����
 			transport.close();
 
 			Log.d("SendMail " + text + " successfully");

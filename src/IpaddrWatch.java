@@ -14,23 +14,35 @@ import java.util.Enumeration;
 import config.AppConfig;
 import debug.Log;
 import tool.SendEmail;
+import tool.SystemInfo;
 
 public class IpaddrWatch {
 	private static String Ipaddr = new String();
 	private static final String AddrStorageFile = AppConfig.WORKING_DIR + "ipaddr";
+	private static final boolean SendMailOnStartup = true;
 
 	public static void main(String[] args) {
 		String CurrentIpaddr;
 		Calendar calendar;
 		String timestamp;
 		String hostname = new String();
+
 		try {
 			hostname = InetAddress.getLocalHost().getHostName();
 		} catch (UnknownHostException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Ipaddr = readToString(AddrStorageFile);
+		if (SendMailOnStartup) {
+			// Do nothing
+		} else {
+			Ipaddr = readToString(AddrStorageFile);
+		}
+
+		SystemInfo si = new SystemInfo();
+		Thread t1 = new Thread(si);
+		t1.start();
+
 		// TODO Auto-generated method stub
 		while (true) {
 			CurrentIpaddr = getCurrentUsedAddr();
@@ -67,6 +79,9 @@ public class IpaddrWatch {
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if (ip.compareTo("0.0.0.0") == 0) {
+			return null;
 		}
 		return ip;
 	}

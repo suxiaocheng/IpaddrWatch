@@ -10,7 +10,7 @@ import java.util.Date;
 import config.AppConfig;
 
 public class Log {
-	private static final String strLogDir = AppConfig.WORKING_DIR + "log";
+	private static final String strLogDir = AppConfig.LOG_DIR + "log";
 	private static final String strLogName = "log";
 	private static File fLogFile;
 	private static File fLogDir;
