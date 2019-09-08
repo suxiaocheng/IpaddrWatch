@@ -3,9 +3,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Calendar;
@@ -33,6 +36,7 @@ public class IpaddrWatch {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 		if (SendMailOnStartup) {
 			// Do nothing
 		} else {
@@ -58,7 +62,7 @@ public class IpaddrWatch {
 				Thread t2 = new Thread(mail);
 				t2.start();
 			}
-			System.out.println(CurrentIpaddr);
+			// System.out.println(CurrentIpaddr);
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -73,12 +77,13 @@ public class IpaddrWatch {
 		try (final DatagramSocket socket = new DatagramSocket()) {
 			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
 			ip = socket.getLocalAddress().getHostAddress();
+			socket.close();
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ip = null;
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ip = null;
 		}
 		if (ip.compareTo("0.0.0.0") == 0) {
 			return null;
