@@ -84,7 +84,7 @@ public class SendEmail implements Runnable {
 			msg.setSentDate(new Date());
 
 			Transport transport = session.getTransport();
-			transport.connect("simulator_test", "simulator123");
+			transport.connect("simulator_test", "AFNPRNDBPRJHNGEP");
 			transport.sendMessage(msg, new Address[] {
 					new InternetAddress("suxiaocheng2010@hotmail.com"),
 					new InternetAddress("simulator_test@163.com") });
